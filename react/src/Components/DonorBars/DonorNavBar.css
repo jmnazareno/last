@@ -1,0 +1,176 @@
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ebebeb;
+  padding: 10px;
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.logo a {
+  text-decoration: none;
+}
+
+.logo a:hover {
+  opacity: 0.8;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-left: 15px;
+  object-fit: cover;
+}
+
+.donation-button button {
+  display: flex;
+  align-items: center;
+  background-color: #E30613;
+  color: white;
+  padding: 8px 20px; /* Adjust the padding for a longer button */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.donation-button button:hover {
+  background-color: #cc0916;
+}
+
+/* Add styles for the icon */
+.donation-button button span {
+  margin-right: 5px; /* Adjust the margin as needed */
+}
+
+.profile-icon{
+  position: absolute;
+  right: 0;
+  z-index: 10;
+  margin-top: 0.5rem; /* Adjust the value as needed */
+  width: 12rem; /* Adjust the width as needed */
+  border-radius: 0.375rem; /* Adjust the border radius as needed */
+  background-color: #ffffff;
+  padding: 0.25rem 0; /* Adjust the padding as needed */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  outline: none; /* Remove focus outline */
+}
+
+.menu-trigger img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  object-fit: cover;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+ul{
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.dropdown-menu{
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  width: 200px;
+}
+
+.dropdown-menu::before{
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 20px;
+  height: 20px;
+  width: 20px;
+  background: var(--secondary-bg);
+  transform: rotate(45deg);
+}
+
+.dropdown-menu.active{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
+}
+
+.dropdown-menu.inactive{
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
+}
+
+.dropdown-menu ul li{
+  padding: 10px  0;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-menu ul li:hover a{
+  color: rgb(212, 33, 9);
+  cursor: pointer;
+}
+
+.dropdown-menu ul li:hover img{
+  opacity: 1;
+  cursor: pointer;
+}
+
+.dropdownItem{
+  display: flex;
+  margin: 10px auto;
+}
+
+.dropdownItem img{
+  max-width: 20px;
+  margin-right: 10px;
+  opacity: 0.5;
+  transition: var(--speed);
+}
+
+.dropdownItem a{
+  max-width: 100px;
+  margin-left: 10px;
+  transition: var(--speed);
+}
+
+.donation-button button {
+  display: flex;
+  align-items: center;
+  background-color: #E30613;
+  color: white;
+  padding: 8px 20px; /* Adjust the padding for a longer button */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.donation-button button:hover {
+  background-color: #cc0916;
+}
+
+/* Add styles for the icon */
+.donation-button button span {
+  margin-right: 5px; /* Adjust the margin as needed */
+}

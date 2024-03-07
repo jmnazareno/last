@@ -1,0 +1,40 @@
+.DonorSideBar{
+    flex: 2.7;
+    height: calc(100vh -  50px);
+    background-color: #EBEBEB;
+}
+
+.DonorSideBarWrapper{
+    padding: 20px;
+
+}
+
+.DonorSideBarList{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.DonorSideBarListItem{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.DonorSideBarIcon{
+   margin-right: 15px; 
+}
+
+.DonorSideBarLine {
+    width: 100%;
+    border: 1px solid #ccc;
+    margin: 10px 0 20px;
+  }
+
+
+  .DonorSideBarLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }

@@ -1,0 +1,40 @@
+.HomeSideBar{
+    flex: 2.7;
+    height: calc(100vh -  50px);
+    background-color: #EBEBEB;
+}
+
+.HomeSideBarWrapper{
+    padding: 20px;
+
+}
+
+.HomeSideBarList{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.HomeSideBarListItem{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.HomeSideBarIcon{
+   margin-right: 15px; 
+}
+
+.HomeSideBarLine {
+    width: 100%;
+    border: 1px solid #ccc;
+    margin: 10px 0 20px;
+  }
+
+
+  .HomeSideBarLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
