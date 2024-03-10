@@ -1,20 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import "./Tryy.css"
-import { AutoGraphOutlined, ColorLensOutlined, HomeOutlined, NotificationsOutlined, SettingsOutlined } from '@mui/icons-material';
+import { AddAPhoto, AutoGraphOutlined, ColorLensOutlined, HomeOutlined, NotificationsOutlined, SettingsOutlined } from '@mui/icons-material';
 import { useStateContext } from '../../Context/ContextProvider';
 import axiosClient from '../../axios';
+import { Box, Button, Modal, TextField } from '@mui/material';
+import TButton from '../../Hooks/Tbutton';
+import { useNavigate } from 'react-router-dom';
 
 export default function Tryy() {
+
+  const Navigate = useNavigate();
+
+  const { userToken, currentUser } = useStateContext();
+
+  if (!userToken || currentUser.role !== 1) {
+    return <Navigate to="login" />;
+  }
+
 
   const [activeItem, setActiveItem] = useState('home');
   const [showNotifications, setShowNotifications] = useState(false);
   const [activeBg, setActiveBg] = useState('bg-1');
 
+  //Modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
 
-
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
   
+
+
+  //notifications
   const handleItemClick = (itemName) => {
     setActiveItem(itemName);
     if (itemName === 'notifications') {
@@ -24,7 +52,58 @@ export default function Tryy() {
     }
   };
 
+  //Posts
+  const [posts, setPosts] = useState({
+    title: "",
+    slug: "",
+    description: "",
+    image: null,
+    image_url: null,
+  });
+  const [error, setError] = useState("");
+  
+  const onImageChoose = (ev) => {
+    const file = ev.target.files[0];
 
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPosts({
+        ...posts,
+        image: file,
+        image_url: reader.result,
+      });
+
+      ev.target.value = "";
+    };
+    reader.readAsDataURL(file);
+  };
+
+    const onSubmit = (ev) => {
+      ev.preventDefault();
+
+      const payload = { ...posts };
+      if (payload.image) {
+        payload.image = payload.image_url;
+      }
+      delete payload.image_url;
+      axiosClient
+      .post("/posts", payload)
+      .then((res) =>{
+        console.log(res);
+        Navigate('/');
+      })
+      .catch((err) => {
+        if (err && err.reponse) {
+          setError(err.response.data.message);
+        }
+        console.log(err, err.response);
+      });
+    };
+    
+
+
+
+  //Logout
   const { setCurrentUser, setUserToken } = useStateContext();
 
   const logout = (ev) => {
@@ -34,6 +113,11 @@ export default function Tryy() {
       setUserToken(null);
     });
   };
+
+  //data
+
+
+
 
   const handleDonation = () => {
     axiosClient.get('/pay')
@@ -131,8 +215,8 @@ export default function Tryy() {
                 <img src="./Assets/images/Logo.jpg" alt="Profile" />
               </div>
               <div className="handle">
-                <h4>ACN Philippines</h4>
-                <p className="text-muted">@ACN_PH</p>
+                <h4>{currentUser.name}</h4>
+                <p className="text-muted">{currentUser.email}</p>
               </div>
             </a>
 
@@ -208,13 +292,100 @@ export default function Tryy() {
         </div>
       </div>
                      {/* END STORIES */}
-      <form className="create-post">
+      <div className="create-post">
         <div className="profile-photo">
           <img src="./Assets/images/Logo.jpg" alt="Profile" />
         </div>
-        <input type="text" placeholder="Your feedback matters!" id="create-post" />
-        <input type="submit" value="Submit" className="btn btn-primary" />
-      </form>
+                <input type="text" placeholder="Your feedback matters!" id="create-post" onClick={handleOpen}/>
+
+      <Modal open={isOpen} onClose={handleClose}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'white',
+            borderRadius: '8px',
+            p: 4,
+            maxWidth: '400px',
+            width: '100%',
+          }}
+        >
+        <form action='#' method='POST' onSubmit={onSubmit}>
+          <h2>Create Post</h2>
+
+            {error && (
+            <div className='error-message'>
+              {error}
+            </div>
+            )}
+
+
+              {/* image */}
+          <label className='label'>Photo</label>
+          <div className='previewcontainer'>
+            {posts.image_url && (
+              <img
+                src={posts.image_url}
+                alt=''
+                className='image-preview'/>
+            )}
+            {!posts.image_url && (
+              <span className='default-image'><AddAPhoto/></span>
+            )}
+            <button type='button' className='upload-button-label'>
+              Change
+              <input
+                type='file'
+                className='hidden'
+                onChange={onImageChoose}
+                />
+            </button>
+          </div>
+
+
+
+          <TextField
+            type="text" // Specify the input type
+            name="title" // Set the input name attribute
+            id="title" // Set the input id attribute
+            label="Title"
+            variant="outlined"
+            value={posts.title}
+            onChange={(ev) => setPosts({ ...posts, title: ev.target.value })}
+            fullWidth
+            placeholder="Title" // Add placeholder text
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            type="text"
+            name="description"
+            id="description"
+            label="Description"
+            variant="outlined"
+            multiline
+            rows={4}
+            value={posts.description || ""} // Set a default value to prevent errors if posts.description is undefined
+            onChange={(ev) => setPosts({ ...posts, description: ev.target.value })}
+            fullWidth
+            placeholder="Description"
+            sx={{ mt: 2 }}
+          />
+          <TButton variant="contained" sx={{ mt: 2 }}>
+            Post
+          </TButton>
+          <Button onClick={handleClose} sx={{ mt: 2, ml: 2 }}>
+            Cancel
+          </Button>
+          </form>
+        </Box>
+      </Modal>
+
+
+
+
+      </div>
 
 
                      {/* News Feed */}

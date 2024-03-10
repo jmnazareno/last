@@ -10,6 +10,7 @@ export default function Registration() {
   const { setCurrentUser, setUserToken } = useStateContext();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState({ __html: "" });
@@ -31,10 +32,12 @@ export default function Registration() {
         email,
         password,
         password_confirmation: passwordConfirmation,
+        role,
       })
       .then(({ data }) => {
         setCurrentUser(data.user)
         setUserToken(data.token)
+        setRole(data.role)
       })
       .catch((error) => {
         if (error.response) {
@@ -112,6 +115,21 @@ export default function Registration() {
           
         />
         </div> 
+
+        <div className="flex items-center justify-center space-x-4">
+            <div className="flex items-center font-mono">
+              <input
+                id="student"
+                type="radio"
+                className="h-4 w-4 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500 text-indigo-600"
+                checked={role === "2"}
+                onChange={() => setRole("2")}
+              />
+              <label htmlFor="student" className="ml-2 text-sm text-gray-900">
+                Donor Account
+              </label>
+            </div>
+            </div>
 
       {error.__html && (<div className="bg-red-500 rounded py-2 px-3 text-white" dangerouslySetInnerHTML={error}>
       </div>)}

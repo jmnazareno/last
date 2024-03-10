@@ -18,13 +18,15 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
+            'role' => $data ['role'],
         ]);
         $token = $user->createToken('main')->plainTextToken;
 
         return response([
             'user' => $user,
-            'token' => $token
+            'token' => $token,
+            'role' => $user->role
         ]);
     }
 
@@ -44,7 +46,8 @@ class AuthController extends Controller
 
         return response([
             'user' => $user,
-            'token' => $token
+            'token' => $token,
+            'role' => $user->role,
         ]);
     }
 

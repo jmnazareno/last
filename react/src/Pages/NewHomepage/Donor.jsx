@@ -7,6 +7,14 @@ import axiosClient from '../../axios';
 
 export default function Tryy() {
 
+  const { userToken, currentUser } = useStateContext();
+
+  if (!userToken || currentUser.role !== 2) {
+    return <Navigate to="login" />;
+  }
+
+
+  
   const [activeItem, setActiveItem] = useState('home');
   const [showNotifications, setShowNotifications] = useState(false);
   const [activeBg, setActiveBg] = useState('bg-1');
@@ -131,8 +139,8 @@ export default function Tryy() {
                 <img src="./Assets/images/profile-1.jpg" alt="Profile" />
               </div>
               <div className="handle">
-                <h4>Ally DU</h4>
-                <p className="text-muted">@aryaa__</p>
+                <h4>{currentUser.name}</h4>
+                <p className="text-muted">{currentUser.email}</p>
               </div>
             </a>
 
@@ -230,13 +238,13 @@ export default function Tryy() {
         </div>
       </div>
                      {/* END STORIES */}
-      <form className="create-post">
+      <div className="create-post">
         <div className="profile-photo">
           <img src="./Assets/images/profile-1.jpg" alt="Profile" />
         </div>
         <input type="text" placeholder="Your feedback matters!" id="create-post" />
         <input type="submit" value="Submit" className="btn btn-primary" />
-      </form>
+      </div>
 
 
                      {/* News Feed */}

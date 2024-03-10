@@ -27,9 +27,10 @@ class PaymentController extends Controller
                         'grab_pay',
                         'paymaya',
                     ],
-                    'success_url' => 'http://localhost:8000/success',
+                    'success_url' => 'http://localhost:3000',
                     'cancel_url' => 'http://localhost:8000/success',
-                    'description' => 'text'
+                    'description' => 'text',
+                    'email_reciept' => 'true'
                 ],
             ]
        ];
